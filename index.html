@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Birthday Message</title>
   <style>
     body, html {
@@ -30,7 +29,7 @@
       font-size: 24px;
       font-family: Arial, sans-serif;
       color: black;
-      display: none; /* Initially hide the message */
+      display: none;
     }
 
     .flower-image {
@@ -52,6 +51,7 @@
     <div id="timer"></div>
     <div id="message"></div>
   </div>
+
   <script>
     const message = "🎂 Happy birthday, Sneha Madam! 🎂 Wishing you a day as beautiful as your smile. 🎂 May each moment be filled with love, laughter, and unforgettable memories. 🎂 You deserve all the happiness in the world today and every day. 🎂 Cheers to another amazing year ahead with you by my side.";
     const messageContainer = document.getElementById("message");
@@ -72,8 +72,8 @@
 
       if (distance < 0) {
         clearInterval(timerInterval);
-        timerContainer.style.display = "none"; // Hide the timer
-        messageContainer.style.display = "block"; // Show the message
+        timerContainer.style.display = "none";
+        messageContainer.style.display = "block";
         displayMessage();
       }
     }
@@ -82,18 +82,26 @@
       const words = message.split(" ");
       let index = 0;
 
-      const intervalId = setInterval(function() {
-        messageContainer.textContent += words[index] + " ";
-        index++;
-
-        if (index === words.length) {
-          clearInterval(intervalId);
+      function typeNext() {
+        if (index < words.length) {
+          messageContainer.textContent += words[index] + " ";
+          index++;
+          setTimeout(typeNext, 100);
+        } else {
+          // Wait 1 second, then clear and restart
+          setTimeout(() => {
+            messageContainer.textContent = "";
+            index = 0;
+            typeNext();
+          }, 1000);
         }
-      }, 100);
+      }
+
+      typeNext(); // Start typing
     }
 
     const timerInterval = setInterval(updateTimer, 1000);
-    updateTimer(); // Initial call to set the timer immediately
+    updateTimer();
   </script>
 </body>
 </html>
